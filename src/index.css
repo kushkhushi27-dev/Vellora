@@ -1,0 +1,477 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: #0A0D12;
+  color: #F3F4F6;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================================================
+   1. CANVAS ATMOSPHERE & CINEMATIC AMBIENT LIGHTING
+   ========================================================================= */
+
+.vellora-canvas-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 15% 15%, rgba(139, 123, 184, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(147, 197, 253, 0.15) 0%, transparent 48%),
+    radial-gradient(circle at 50% 50%, rgba(224, 168, 46, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 30% 85%, rgba(78, 159, 112, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 75% 90%, rgba(196, 181, 253, 0.14) 0%, transparent 50%),
+    linear-gradient(180deg, #0A0D13 0%, #080A0F 100%);
+}
+
+.vellora-canvas-art {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=2000&q=80');
+  background-size: cover;
+  background-position: center;
+  filter: blur(48px) saturate(140%) brightness(0.55);
+  transform: scale(1.1);
+  opacity: 0.65;
+}
+
+.vellora-canvas-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(8, 10, 14, 0.45) 0%, rgba(5, 7, 10, 0.75) 100%);
+}
+
+/* =========================================================================
+   2. LIQUID GLASS MATERIAL SYSTEM
+   ========================================================================= */
+
+/* Base Liquid Glass Card (Elevated Surface) */
+.liquid-glass-card,
+.reference-glass-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(20, 24, 34, 0.62);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
+  box-shadow: 
+    0 16px 40px -8px rgba(0, 0, 0, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+/* Hover State with Iridescent Edge Highlight */
+.liquid-glass-card:hover,
+.reference-glass-card:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(26, 32, 45, 0.72);
+  border-color: rgba(226, 232, 240, 0.25);
+  box-shadow: 
+    0 22px 50px -10px rgba(0, 0, 0, 0.65),
+    0 8px 20px rgba(0, 0, 0, 0.35),
+    0 0 24px 0 rgba(196, 181, 253, 0.12),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Interactive Liquid Glass Surface with Iridescent Borders */
+.liquid-glass-interactive {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.015) 100%), rgba(22, 27, 38, 0.65);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  box-shadow: 
+    0 14px 36px -8px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.20),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-glass-interactive:hover {
+  border-color: rgba(147, 197, 253, 0.35);
+  box-shadow: 
+    0 20px 45px -8px rgba(0, 0, 0, 0.6),
+    0 0 20px 0 rgba(147, 197, 253, 0.15),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.32);
+  transform: translateY(-2px);
+}
+
+/* Deep / Nested Glass Container */
+.reference-glass-nested,
+.liquid-glass-nested {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%), rgba(16, 20, 28, 0.75);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.10),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.reference-glass-panel,
+.liquid-glass-panel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%), rgba(18, 22, 32, 0.68);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 50px -10px rgba(0, 0, 0, 0.55),
+    inset 0 1px 1.2px 0 rgba(255, 255, 255, 0.16);
+}
+
+/* =========================================================================
+   3. IRIDESCENT EDGES & SPECULAR REFLECTION HIGHLIGHTS
+   ========================================================================= */
+
+.iridescent-border {
+  position: relative;
+}
+
+.iridescent-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(147, 197, 253, 0.45) 0%,
+    rgba(196, 181, 253, 0.40) 30%,
+    rgba(253, 230, 138, 0.45) 60%,
+    rgba(226, 232, 240, 0.35) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.iridescent-border:hover::before {
+  opacity: 1;
+}
+
+.iridescent-glow-subtle {
+  box-shadow: 
+    0 0 25px -4px rgba(196, 181, 253, 0.14),
+    0 0 10px -2px rgba(147, 197, 253, 0.18);
+}
+
+.iridescent-glow-gold {
+  box-shadow: 
+    0 0 25px -4px rgba(224, 168, 46, 0.28),
+    0 0 10px -2px rgba(253, 230, 138, 0.20);
+}
+
+/* =========================================================================
+   4. BUTTON TRANSFORMATION: LIQUID GLASS WITH SPECULAR HIGHLIGHT & SHIMMER
+   ========================================================================= */
+
+/* Primary Button: Champagne Gold Liquid Glass */
+.liquid-btn-primary,
+.reference-pill-active {
+  position: relative;
+  background: 
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.08) 50%, rgba(0, 0, 0, 0.12) 100%),
+    linear-gradient(135deg, #E5B242 0%, #D49726 100%);
+  color: #0A0C0E;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 10px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 
+    0 8px 24px -4px rgba(224, 168, 46, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Moving Light Streak (Shimmer) across Primary Button on Hover */
+.liquid-btn-primary::after,
+.reference-pill-active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: none;
+  pointer-events: none;
+}
+
+.liquid-btn-primary:hover::after,
+.reference-pill-active:hover::after {
+  animation: liquidShimmerStreak 0.85s ease-out;
+}
+
+.liquid-btn-primary:hover,
+.reference-pill-active:hover {
+  transform: translateY(-1.5px);
+  filter: brightness(1.08);
+  box-shadow: 
+    0 12px 28px -4px rgba(224, 168, 46, 0.6),
+    0 4px 10px rgba(0, 0, 0, 0.4),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.9);
+  color: #000000;
+}
+
+.liquid-btn-primary:active,
+.reference-pill-active:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 4px 14px -2px rgba(224, 168, 46, 0.4),
+    inset 0 1px 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Secondary Button: Dark Translucent Liquid Glass with Silver/Violet Reflection */
+.liquid-btn-secondary,
+.reference-pill-inactive {
+  position: relative;
+  background: 
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 100%),
+    rgba(24, 29, 40, 0.65);
+  color: #F1F5F9;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
+  border-radius: 9999px;
+  padding: 10px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 
+    0 6px 18px -4px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.liquid-btn-secondary::after,
+.reference-pill-inactive::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(196, 181, 253, 0.25) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+
+.liquid-btn-secondary:hover::after,
+.reference-pill-inactive:hover::after {
+  animation: liquidShimmerStreak 0.85s ease-out;
+}
+
+.liquid-btn-secondary:hover,
+.reference-pill-inactive:hover {
+  background: 
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.04) 100%),
+    rgba(32, 39, 54, 0.75);
+  border-color: rgba(196, 181, 253, 0.35);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 
+    0 10px 24px -4px rgba(0, 0, 0, 0.5),
+    0 0 16px 0 rgba(196, 181, 253, 0.12),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* Circular Icon Button (44px x 44px) */
+.reference-circle-btn,
+.liquid-circle-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(22, 27, 38, 0.65);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 
+    0 6px 16px -2px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.reference-circle-btn:hover,
+.liquid-circle-btn:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.06) 100%), rgba(30, 38, 52, 0.75);
+  border-color: rgba(147, 197, 253, 0.35);
+  box-shadow: 
+    0 10px 22px -3px rgba(0, 0, 0, 0.45),
+    0 0 14px 0 rgba(147, 197, 253, 0.18),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px) scale(1.04);
+}
+
+/* Circular Action Play Button for Cards */
+.reference-card-play,
+.liquid-card-play {
+  width: 38px;
+  height: 38px;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 100%);
+  color: #0D0F14;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 6px 18px rgba(0, 0, 0, 0.45),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.reference-card-play:hover,
+.liquid-card-play:hover {
+  background: #FFFFFF;
+  transform: scale(1.12);
+  box-shadow: 
+    0 8px 24px rgba(255, 255, 255, 0.45),
+    0 0 16px rgba(255, 255, 255, 0.3);
+}
+
+/* =========================================================================
+   5. SHIMMER & ATMOSPHERIC ANIMATIONS
+   ========================================================================= */
+
+@keyframes liquidShimmerStreak {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+@keyframes iridescentShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes museAuraPulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 20px 2px rgba(147, 197, 253, 0.25),
+      0 0 40px 6px rgba(196, 181, 253, 0.15);
+    border-color: rgba(147, 197, 253, 0.4);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px 4px rgba(196, 181, 253, 0.35),
+      0 0 60px 10px rgba(147, 197, 253, 0.2);
+    border-color: rgba(196, 181, 253, 0.6);
+  }
+}
+
+.muse-pulse-ring {
+  animation: museAuraPulse 4s ease-in-out infinite;
+}
+
+/* Reduced Motion Override for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Backward-compatible classes */
+.vellora-button-primary {
+  @apply liquid-btn-primary;
+}
+
+.vellora-button-secondary {
+  @apply liquid-btn-secondary;
+}
+
+.vellora-glass {
+  @apply liquid-glass-panel;
+}
+
+.vellora-glass-card {
+  @apply liquid-glass-card;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(14, 17, 24, 0.45);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  backdrop-filter: blur(10px);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
