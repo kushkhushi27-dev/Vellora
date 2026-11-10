@@ -33,3 +33,4 @@ The Vellora team takes security and user privacy seriously. If you discover a se
 - **Never commit secrets:** Never commit API keys, passwords, bearer tokens, or `.env` files into source control.
 - **Keep dependencies updated:** Regularly run `npm audit` and keep packages updated.
 - **Input Sanitization:** Ensure all external API inputs (e.g., Open Library responses or user-entered text) are handled safely without injecting unsafe scripts into the DOM.
+
